@@ -1,0 +1,25 @@
+section {
+  display: grid;
+  gap: 30px;
+}
+
+h2 {
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 7px solid #000000;
+  color: #000000;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Správa z @empty bloku, keď v poli nie je žiadna kniha. */
+section > p {
+  margin: 0;
+  padding: 26px;
+  background-color: #ffffff;
+  border: 5px dashed #000000;
+  font-weight: 800;
+  text-transform: uppercase;
+}

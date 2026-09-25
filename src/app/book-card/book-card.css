@@ -1,0 +1,126 @@
+.book-card {
+  background-color: #ffffff;
+  border: 5px solid #000000;
+  border-radius: 0;
+  padding: 26px;
+  box-shadow: 12px 12px 0 #000000;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.book-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 16px 16px 0 #000000;
+}
+
+.book-card h3 {
+  margin: 0 0 16px;
+  color: #000000;
+  font-size: 1.65rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.book-card p {
+  margin: 5px 0;
+  font-family: "Courier New", Consolas, monospace;
+  font-weight: 700;
+  color: #27272a;
+}
+
+/* Stav dostupnosti ako výrazný štítok. */
+.book-card .status {
+  display: inline-block;
+  margin: 18px 0 0;
+  padding: 7px 14px;
+  background-color: #4ade80;
+  border: 4px solid #000000;
+  box-shadow: 5px 5px 0 #000000;
+  color: #000000;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.book-card .status.unavailable {
+  background-color: #fb7185;
+}
+
+.book-card .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.book-card button {
+  padding: 13px 20px;
+  background-color: #06b6d4;
+  border: 4px solid #000000;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #000000;
+  color: #000000;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease,
+    background-color 0.12s ease;
+}
+
+/* Druhé tlačidlo v poradí – „Vypožičať“. */
+.book-card button + button {
+  background-color: #c084fc;
+}
+
+.book-card button:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 #000000;
+}
+
+/* Kliknutie tlačidlo „zatlačí“ do tienia. */
+.book-card button:active:not(:disabled) {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 #000000;
+}
+
+.book-card button:focus-visible {
+  outline: 4px solid #000000;
+  outline-offset: 4px;
+}
+
+.book-card button:disabled {
+  background-color: #e4e4e7;
+  border-color: #71717a;
+  box-shadow: 6px 6px 0 #a1a1aa;
+  color: #71717a;
+  cursor: not-allowed;
+}
+
+.book-card small {
+  display: block;
+  margin-top: 14px;
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #9f1239;
+}
+
+/* Blok detailu, ktorý sa prepína cez @if. */
+.book-card .detail {
+  margin-top: 22px;
+  padding: 18px 20px;
+  background-color: #fde047;
+  border: 4px solid #000000;
+  box-shadow: 6px 6px 0 #000000;
+}
+
+.book-card .detail p {
+  margin: 5px 0;
+}
