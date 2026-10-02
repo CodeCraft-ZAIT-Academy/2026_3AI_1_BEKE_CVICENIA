@@ -10,9 +10,9 @@
 
   <mat-card-content>
     @if (book().available) {
-      <p>Kniha je dostupná.</p>
+      <p class="status">Kniha je dostupná.</p>
     } @else {
-      <p>Kniha je momentálne vypožičaná.</p>
+      <p class="status status-borrowed">Kniha je momentálne vypožičaná.</p>
     }
 
     @if (showDetails) {
@@ -21,19 +21,19 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <button matButton (click)="toggleDetails()">
+    <button matButton class="btn btn-detail" (click)="toggleDetails()">
       @if (showDetails) { Skryť detail } @else { Zobraziť detail }
     </button>
 
-    <button matButton="filled" [disabled]="!book().available" (click)="borrow()">
+    <button matButton="filled" class="btn btn-borrow" [disabled]="!book().available" (click)="borrow()">
       Vypožičať
     </button>
 
     @if (!book().available) {
-      <button matButton="outlined" (click)="giveBack()">Vrátiť</button>
+      <button matButton="outlined" class="btn btn-return" (click)="giveBack()">Vrátiť</button>
     }
 
-    <button matIconButton (click)="toggleFavorite()">
+    <button matIconButton class="btn-favorite" (click)="toggleFavorite()">
       @if (book().favorite) {
         <mat-icon class="favorite-icon">star</mat-icon>
       } @else {

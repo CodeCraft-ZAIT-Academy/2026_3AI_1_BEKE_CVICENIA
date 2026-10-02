@@ -1,13 +1,13 @@
 <section>
   <h2>Zoznam kníh</h2>
-  <p>V knižnici je spolu {{ books.length }} kníh.</p>
+  <p class="count">V knižnici je spolu {{ books.length }} kníh.</p>
 
   @for (book of books; track book.id; let i = $index) {
     @if (isOnCurrentPage(i)) {
       <app-book-card [book]="book"></app-book-card>
     }
   } @empty {
-    <p>V knižnici zatiaľ nie sú žiadne knihy.</p>
+    <p class="empty">V knižnici zatiaľ nie sú žiadne knihy.</p>
   }
 
   <div class="pagination">

@@ -1,21 +1,128 @@
+/* Material karta v našom štýle – hrubý čierny rám a ostrý tieň. */
 .book-card {
-  margin-bottom: 4px;
-  border-left: 6px solid #94a3b8;
+  background-color: #ffffff;
+  border: 5px solid #000000;
+  border-left: 14px solid #94a3b8;
+  border-radius: 0;
+  padding: 10px 6px 14px;
+  box-shadow: 12px 12px 0 #000000;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.book-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 16px 16px 0 #000000;
+}
+
+.book-card mat-card-title {
+  margin-bottom: 6px;
+  color: #000000;
+  font-size: 1.65rem;
+  font-weight: 900;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.book-card mat-card-subtitle {
+  color: #27272a;
+  font-family: "Courier New", Consolas, monospace;
+  font-weight: 700;
 }
 
 .book-card p {
-  margin: 6px 0;
-  color: #475569;
+  margin: 5px 0;
+  font-family: "Courier New", Consolas, monospace;
+  font-weight: 700;
+  color: #27272a;
 }
 
+/* Stav dostupnosti ako výrazný štítok. */
+.book-card .status {
+  display: inline-block;
+  margin: 12px 0 4px;
+  padding: 7px 14px;
+  background-color: #4ade80;
+  border: 4px solid #000000;
+  box-shadow: 5px 5px 0 #000000;
+  color: #000000;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.book-card .status.status-borrowed {
+  background-color: #fb7185;
+}
+
+.book-card mat-card-actions {
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 16px;
+}
+
+/* Tlačidlá Detail / Vypožičať / Vrátiť. */
+.book-card .btn {
+  height: auto;
+  padding: 11px 18px;
+  background-color: #06b6d4;
+  border: 4px solid #000000;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #000000;
+  color: #000000;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.book-card .btn-borrow {
+  background-color: #c084fc;
+}
+
+.book-card .btn-return {
+  background-color: #fde047;
+}
+
+.book-card .btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 #000000;
+}
+
+/* Kliknutie tlačidlo „zatlačí“ do tieňa. */
+.book-card .btn:active:not(:disabled) {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 #000000;
+}
+
+.book-card .btn:disabled {
+  background-color: #e4e4e7;
+  border-color: #71717a;
+  box-shadow: 6px 6px 0 #a1a1aa;
+  color: #71717a;
+}
+
+.book-card .btn-favorite {
+  color: #000000;
+}
+
+/* Vypožičaná kniha – sivá karta so sivým tieňom. */
 .book-card.unavailable {
-  opacity: 0.6;
-  background-color: #f1f5f9;
+  background-color: #e4e4e7;
+  box-shadow: 12px 12px 0 #71717a;
 }
 
+.book-card.unavailable mat-card-title {
+  color: #52525b;
+}
+
+/* Obľúbená kniha – oranžový tieň. */
 .book-card.favorite {
   background-color: #fffbeb;
-  box-shadow: 0 0 0 2px #f59e0b;
+  box-shadow: 12px 12px 0 #f59e0b;
 }
 
 .favorite-icon {

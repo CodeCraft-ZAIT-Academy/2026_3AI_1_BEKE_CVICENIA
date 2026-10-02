@@ -14,8 +14,15 @@ h2 {
   letter-spacing: 0.06em;
 }
 
+.count {
+  margin: 0;
+  font-family: "Courier New", Consolas, monospace;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 /* Správa z @empty bloku, keď v poli nie je žiadna kniha. */
-section > p {
+.empty {
   margin: 0;
   padding: 26px;
   background-color: #ffffff;
@@ -30,4 +37,24 @@ section > p {
   justify-content: center;
   gap: 16px;
   margin-top: 8px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.pagination button {
+  height: auto;
+  padding: 10px 16px;
+  background-color: #ffffff;
+  border: 4px solid #000000;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #000000;
+  color: #000000;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.pagination button:disabled {
+  border-color: #71717a;
+  box-shadow: 6px 6px 0 #a1a1aa;
+  color: #71717a;
 }
