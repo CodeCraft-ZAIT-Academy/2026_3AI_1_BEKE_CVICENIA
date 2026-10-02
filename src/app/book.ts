@@ -5,4 +5,7 @@ export interface Book {
   year: number;
   available: boolean;
   genre: string;
+  rating: number;
+  pages: number;
+  favorite: boolean;
 }
