@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { BookCard } from '../book-card/book-card';
+import { Cart } from '../cart/cart';
 import { Book } from '../book';
 import { generateBooks } from '../book-generator';
 
 @Component({
   selector: 'app-book-list',
-  imports: [BookCard, MatButtonModule, MatIconModule],
+  imports: [BookCard, Cart, MatButtonModule, MatIconModule],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css'
 })

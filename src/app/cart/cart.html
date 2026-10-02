@@ -1,0 +1,34 @@
+<aside class="cart">
+  <header class="cart-header">
+    <mat-icon>shopping_cart</mat-icon>
+    <h2>Košík</h2>
+    <span class="cart-count">{{ borrowedBooks().length }}</span>
+  </header>
+
+  @if (borrowedBooks().length > 0) {
+    <ul class="cart-items">
+      @for (book of borrowedBooks(); track book.id) {
+        <li class="cart-item" [style.border-left-color]="genreColor(book)">
+          <div class="cart-item-text">
+            <strong>{{ book.title }}</strong>
+            <small>{{ book.author }}</small>
+          </div>
+
+          <button matButton class="cart-btn" (click)="giveBack(book)">
+            <mat-icon>undo</mat-icon>
+            Vrátiť
+          </button>
+        </li>
+      }
+    </ul>
+
+    <button matButton class="cart-btn cart-btn-all" (click)="giveBackAll()">
+      Vrátiť všetko ({{ borrowedBooks().length }})
+    </button>
+  } @else {
+    <p class="cart-empty">
+      <mat-icon>remove_shopping_cart</mat-icon>
+      Košík je prázdny. Vypožičaj si nejakú knihu.
+    </p>
+  }
+</aside>

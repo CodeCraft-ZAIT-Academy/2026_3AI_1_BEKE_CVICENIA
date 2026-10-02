@@ -1,15 +1,19 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Book } from '../book';
 import { BookDetail } from '../book-detail/book-detail';
+import { genreColor } from '../genre-color';
 
 @Component({
   selector: 'app-book-card',
   imports: [MatCardModule, MatButtonModule, MatIconModule, BookDetail],
   templateUrl: './book-card.html',
-  styleUrl: './book-card.css'
+  styleUrl: './book-card.css',
+  // Knihu môže vrátiť aj košík – karta sa musí kontrolovať vždy,
+  // inak by ostala sivá (predvolené OnPush sleduje iba nové inputy).
+  changeDetection: ChangeDetectionStrategy.Eager
 })
 export class BookCard {
   book = input.required<Book>();
@@ -32,23 +36,6 @@ export class BookCard {
   }
 
   genreColor(): string {
-    switch (this.book().genre) {
-      case 'Fantasy':
-        return '#7c3aed';
-      case 'Science Fiction':
-        return '#0891b2';
-      case 'Mystery':
-        return '#ca8a04';
-      case 'Romance':
-        return '#db2777';
-      case 'Horror':
-        return '#b91c1c';
-      case 'Classic':
-        return '#92400e';
-      case "Children's Literature":
-        return '#16a34a';
-      default:
-        return '#94a3b8';
-    }
+    return genreColor(this.book().genre);
   }
 }

@@ -12,7 +12,7 @@
 }
 
 main {
-  width: min(1000px, 92%);
+  width: min(1280px, 92%);
   margin: 0 auto;
   padding: 56px 0 80px;
 }

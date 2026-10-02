@@ -1,0 +1,116 @@
+/* Košík s vypožičanými knihami – rovnaký štýl ako karty. */
+.cart {
+  background-color: #ffffff;
+  border: 5px solid #000000;
+  box-shadow: 12px 12px 0 #000000;
+}
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background-color: #000000;
+  color: #fde047;
+}
+
+.cart-header h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cart-count {
+  min-width: 38px;
+  padding: 4px 10px;
+  background-color: #fb7185;
+  border: 3px solid #fde047;
+  color: #000000;
+  font-weight: 900;
+  text-align: center;
+}
+
+.cart-items {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-left: 10px solid #94a3b8;
+  border-bottom: 3px dashed #000000;
+}
+
+.cart-item-text {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-item-text strong {
+  overflow: hidden;
+  color: #000000;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-item-text small {
+  font-family: "Courier New", Consolas, monospace;
+  font-weight: 700;
+  color: #27272a;
+}
+
+.cart-btn {
+  flex-shrink: 0;
+  height: auto;
+  padding: 8px 12px;
+  background-color: #fde047;
+  border: 3px solid #000000;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #000000;
+  color: #000000;
+  font-weight: 900;
+  text-transform: uppercase;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.cart-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000000;
+}
+
+.cart-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 #000000;
+}
+
+.cart-btn-all {
+  display: flex;
+  width: calc(100% - 32px);
+  margin: 18px 16px 20px;
+  padding: 12px;
+  background-color: #fb7185;
+  border-width: 4px;
+}
+
+.cart-empty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px;
+  padding: 20px;
+  border: 4px dashed #000000;
+  font-weight: 800;
+  text-transform: uppercase;
+}

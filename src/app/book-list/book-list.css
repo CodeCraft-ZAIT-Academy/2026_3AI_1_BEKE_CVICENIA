@@ -1,3 +1,28 @@
+/* Zoznam kníh vľavo, košík vpravo. */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 48px;
+  align-items: start;
+}
+
+app-cart {
+  position: sticky;
+  top: 24px;
+}
+
+/* Na úzkej obrazovke je košík nad zoznamom. */
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  app-cart {
+    position: static;
+    order: -1;
+  }
+}
+
 section {
   display: grid;
   gap: 30px;

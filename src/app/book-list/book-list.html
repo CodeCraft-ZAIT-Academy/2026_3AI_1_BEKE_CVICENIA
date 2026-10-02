@@ -1,26 +1,30 @@
-<section>
-  <h2>Zoznam kníh</h2>
-  <p class="count">V knižnici je spolu {{ books.length }} kníh.</p>
+<div class="layout">
+  <section>
+    <h2>Zoznam kníh</h2>
+    <p class="count">V knižnici je spolu {{ books.length }} kníh.</p>
 
-  @for (book of books; track book.id; let i = $index) {
-    @if (isOnCurrentPage(i)) {
-      <app-book-card [book]="book"></app-book-card>
+    @for (book of books; track book.id; let i = $index) {
+      @if (isOnCurrentPage(i)) {
+        <app-book-card [book]="book"></app-book-card>
+      }
+    } @empty {
+      <p class="empty">V knižnici zatiaľ nie sú žiadne knihy.</p>
     }
-  } @empty {
-    <p class="empty">V knižnici zatiaľ nie sú žiadne knihy.</p>
-  }
 
-  <div class="pagination">
-    <button matButton="outlined" (click)="previousPage()" [disabled]="currentPage === 1">
-      <mat-icon>chevron_left</mat-icon>
-      Predošlá
-    </button>
+    <div class="pagination">
+      <button matButton="outlined" (click)="previousPage()" [disabled]="currentPage === 1">
+        <mat-icon>chevron_left</mat-icon>
+        Predošlá
+      </button>
 
-    <span>Strana {{ currentPage }} z {{ pageCount() }}</span>
+      <span>Strana {{ currentPage }} z {{ pageCount() }}</span>
 
-    <button matButton="outlined" (click)="nextPage()" [disabled]="currentPage === pageCount()">
-      Ďalšia
-      <mat-icon iconPositionEnd>chevron_right</mat-icon>
-    </button>
-  </div>
-</section>
+      <button matButton="outlined" (click)="nextPage()" [disabled]="currentPage === pageCount()">
+        Ďalšia
+        <mat-icon iconPositionEnd>chevron_right</mat-icon>
+      </button>
+    </div>
+  </section>
+
+  <app-cart [books]="books"></app-cart>
+</div>
