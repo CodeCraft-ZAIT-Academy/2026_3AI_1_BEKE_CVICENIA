@@ -1,98 +1,114 @@
-<section>
-  <mat-accordion multi>
-    <mat-expansion-panel #addPanel class="panel-add">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon>add_circle</mat-icon>
-          Pridať knihu
-        </mat-panel-title>
-      </mat-expansion-panel-header>
+<div class="layout">
+  <!-- Vľavo: pridanie knihy a košík, pri scrollovaní ostávajú na mieste. -->
+  <aside class="sidebar">
+    <mat-accordion multi>
+      <mat-expansion-panel #addPanel class="panel-add">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>add_circle</mat-icon>
+            Pridať knihu
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-      <app-book-form (saved)="addBook($event); addPanel.close()"></app-book-form>
-    </mat-expansion-panel>
+        <app-book-form (saved)="addBook($event); addPanel.close()"></app-book-form>
+      </mat-expansion-panel>
 
-    <mat-expansion-panel class="panel-cart">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon>shopping_cart</mat-icon>
-          Košík
-        </mat-panel-title>
-        <mat-panel-description>
-          <span class="borrowed-count">Požičané knihy: {{ borrowedBooks().length }} / {{ maxBorrowed }}</span>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+      <mat-expansion-panel class="panel-cart">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>shopping_cart</mat-icon>
+            Košík
+          </mat-panel-title>
+          <mat-panel-description>
+            <span class="borrowed-count">Požičané knihy: {{ borrowedBooks().length }} / {{ maxBorrowed }}</span>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
 
-      <app-cart [books]="books" (returned)="giveBack($event)" (returnedAll)="giveBackAll()"></app-cart>
-    </mat-expansion-panel>
-  </mat-accordion>
+        <app-cart
+          [books]="books"
+          (returned)="giveBack($event)"
+          (returnedAll)="giveBackAll()"
+        ></app-cart>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </aside>
 
-  <h2>Zoznam kníh</h2>
+  <section>
+    <h2>Zoznam kníh</h2>
 
-  <div class="toolbar">
-    <mat-form-field class="search">
-      <mat-label>Hľadať podľa názvu alebo autora</mat-label>
-      <mat-icon matPrefix>search</mat-icon>
-      <input matInput name="search" [(ngModel)]="searchText" (ngModelChange)="firstPage()">
-      @if (searchText) {
-        <button matIconButton matSuffix type="button" (click)="clearSearch()">
-          <mat-icon>close</mat-icon>
-        </button>
+    <div class="toolbar">
+      <mat-form-field class="search">
+        <mat-label>Hľadať podľa názvu alebo autora</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput name="search" [(ngModel)]="searchText" (ngModelChange)="firstPage()" />
+        @if (searchText) {
+          <button matIconButton matSuffix type="button" (click)="clearSearch()">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+
+      <mat-button-toggle-group
+        name="availability"
+        [(ngModel)]="availability"
+        (ngModelChange)="firstPage()"
+      >
+        <mat-button-toggle value="all">Všetky</mat-button-toggle>
+        <mat-button-toggle value="available">Dostupné</mat-button-toggle>
+        <mat-button-toggle value="borrowed">Vypožičané</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <mat-form-field class="sort">
+        <mat-label>Zoradiť podľa</mat-label>
+        <mat-select name="sortBy" [(ngModel)]="sortBy" (ngModelChange)="firstPage()">
+          <mat-option value="none">Bez zoradenia</mat-option>
+          <mat-option value="title">Názvu (A – Z)</mat-option>
+          <mat-option value="year">Roku (najnovšie)</mat-option>
+          <mat-option value="rating">Hodnotenia (najlepšie)</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    @if (visibleBooks().length > 0) {
+      <p class="count">
+        Zobrazené knihy {{ firstShown() }} – {{ lastShown() }} z {{ visibleBooks().length }}
+      </p>
+    }
+
+    <div class="cards">
+      @for (book of visibleBooks(); track book.id; let i = $index) {
+        @if (isOnCurrentPage(i)) {
+          <app-book-card
+            [book]="book"
+            (borrowed)="borrow(book)"
+            (returned)="giveBack(book)"
+            (favoriteToggled)="toggleFavorite(book)"
+            (edited)="updateBook($event)"
+            (deleted)="deleteBook(book)"
+          >
+          </app-book-card>
+        }
+      } @empty {
+        @if (books.length === 0) {
+          <p class="empty">V knižnici zatiaľ nie sú žiadne knihy.</p>
+        } @else {
+          <p class="empty">Nenašli sa žiadne knihy. Skús zmeniť hľadanie alebo filter.</p>
+        }
       }
-    </mat-form-field>
+    </div>
 
-    <mat-button-toggle-group name="availability" [(ngModel)]="availability" (ngModelChange)="firstPage()">
-      <mat-button-toggle value="all">Všetky</mat-button-toggle>
-      <mat-button-toggle value="available">Dostupné</mat-button-toggle>
-      <mat-button-toggle value="borrowed">Vypožičané</mat-button-toggle>
-    </mat-button-toggle-group>
+    <div class="pagination">
+      <button matButton="outlined" (click)="previousPage()" [disabled]="currentPage === 1">
+        <mat-icon>chevron_left</mat-icon>
+        Predošlá
+      </button>
 
-    <mat-form-field class="sort">
-      <mat-label>Zoradiť podľa</mat-label>
-      <mat-select name="sortBy" [(ngModel)]="sortBy" (ngModelChange)="firstPage()">
-        <mat-option value="none">Bez zoradenia</mat-option>
-        <mat-option value="title">Názvu (A – Z)</mat-option>
-        <mat-option value="year">Roku (najnovšie)</mat-option>
-        <mat-option value="rating">Hodnotenia (najlepšie)</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+      <span>Strana {{ currentPage }} z {{ pageCount() }}</span>
 
-  @if (visibleBooks().length > 0) {
-    <p class="count">
-      Zobrazené knihy {{ firstShown() }} – {{ lastShown() }} z {{ visibleBooks().length }}
-    </p>
-  }
-
-  @for (book of visibleBooks(); track book.id; let i = $index) {
-    @if (isOnCurrentPage(i)) {
-      <app-book-card
-        [book]="book"
-        (borrowed)="borrow(book)"
-        (returned)="giveBack(book)"
-        (favoriteToggled)="toggleFavorite(book)"
-        (edited)="updateBook($event)"
-        (deleted)="deleteBook(book)">
-      </app-book-card>
-    }
-  } @empty {
-    @if (books.length === 0) {
-      <p class="empty">V knižnici zatiaľ nie sú žiadne knihy.</p>
-    } @else {
-      <p class="empty">Nenašli sa žiadne knihy. Skús zmeniť hľadanie alebo filter.</p>
-    }
-  }
-
-  <div class="pagination">
-    <button matButton="outlined" (click)="previousPage()" [disabled]="currentPage === 1">
-      <mat-icon>chevron_left</mat-icon>
-      Predošlá
-    </button>
-
-    <span>Strana {{ currentPage }} z {{ pageCount() }}</span>
-
-    <button matButton="outlined" (click)="nextPage()" [disabled]="currentPage === pageCount()">
-      Ďalšia
-      <mat-icon iconPositionEnd>chevron_right</mat-icon>
-    </button>
-  </div>
-</section>
+      <button matButton="outlined" (click)="nextPage()" [disabled]="currentPage === pageCount()">
+        Ďalšia
+        <mat-icon iconPositionEnd>chevron_right</mat-icon>
+      </button>
+    </div>
+  </section>
+</div>

@@ -42,7 +42,7 @@ export class BookList {
   sortBy: string = 'none';
 
   currentPage: number = 1;
-  pageSize: number = 5;
+  pageSize: number = 6;
 
   // Knihy po hľadaní, filtri a zoradení – pôvodné pole books sa nemení.
   visibleBooks(): Book[] {

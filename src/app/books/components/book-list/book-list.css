@@ -36,6 +36,7 @@ mat-expansion-panel-header.mat-expanded {
 
 mat-panel-title {
   display: flex;
+  flex: none;
   align-items: center;
   gap: 10px;
   font-size: 1.15rem;
@@ -46,15 +47,17 @@ mat-panel-title {
 
 mat-panel-description {
   justify-content: flex-end;
+  margin-right: 8px;
 }
 
 /* Počet výpožičiek ako štítok. */
 .borrowed-count {
-  padding: 4px 10px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  white-space: nowrap;
   background-color: #ffffff;
   border: 3px solid #000000;
   box-shadow: 4px 4px 0 #000000;
-  font-family: "Courier New", Consolas, monospace;
   font-weight: 900;
 }
 
@@ -91,10 +94,52 @@ mat-button-toggle-group {
   text-transform: uppercase;
 }
 
+/* Dva stĺpce: vľavo panely, vpravo zoznam kníh. */
+.layout {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+/* Panely ostávajú pri scrollovaní na mieste. Ak sú vyššie ako okno, dajú sa scrollovať samostatne
+   (padding nechá miesto pre tieň). */
+.sidebar {
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: 0 14px 14px 0;
+}
+
 section {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 30px;
+}
+
+/* Karty v mriežke – koľko sa zmestí vedľa seba. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 36px 32px;
+}
+
+.cards .empty {
+  grid-column: 1 / -1;
+}
+
+/* Na užšej obrazovke je všetko pod sebou, panely nad zoznamom. */
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
 }
 
 h2 {

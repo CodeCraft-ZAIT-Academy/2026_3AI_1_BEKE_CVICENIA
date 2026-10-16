@@ -20,6 +20,27 @@
     </span>
     <mat-card-title>{{ book().title }}</mat-card-title>
     <mat-card-subtitle>{{ book().author }}</mat-card-subtitle>
+
+    <!-- Hviezdička, úprava a mazanie vpravo hore – iba v normálnom stave karty. -->
+    @if (!editing && !confirmingDelete) {
+      <div class="card-tools">
+        <button matIconButton class="btn-icon" (click)="toggleFavorite()">
+          @if (book().favorite) {
+            <mat-icon class="favorite-icon">star</mat-icon>
+          } @else {
+            <mat-icon>star_border</mat-icon>
+          }
+        </button>
+
+        <button matIconButton class="btn-icon" (click)="startEdit()">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button matIconButton class="btn-icon" (click)="askDelete()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    }
   </mat-card-header>
 
   @if (editing) {
@@ -60,24 +81,6 @@
       @if (!book().available) {
         <button matButton="outlined" class="btn btn-return" (click)="giveBack()">Vrátiť</button>
       }
-
-      <span class="spacer"></span>
-
-      <button matIconButton class="btn-icon" (click)="toggleFavorite()">
-        @if (book().favorite) {
-          <mat-icon class="favorite-icon">star</mat-icon>
-        } @else {
-          <mat-icon>star_border</mat-icon>
-        }
-      </button>
-
-      <button matIconButton class="btn-icon" (click)="startEdit()">
-        <mat-icon>edit</mat-icon>
-      </button>
-
-      <button matIconButton class="btn-icon" (click)="askDelete()">
-        <mat-icon>delete</mat-icon>
-      </button>
     </mat-card-actions>
   }
 </mat-card>
