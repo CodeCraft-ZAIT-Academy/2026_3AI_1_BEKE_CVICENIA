@@ -1,4 +1,3 @@
-// Farba žánru – iba na zobrazenie, preto nie je v BookService.
 export function getGenreColor(genre: string): string {
   switch (genre) {
     case 'Fantasy':

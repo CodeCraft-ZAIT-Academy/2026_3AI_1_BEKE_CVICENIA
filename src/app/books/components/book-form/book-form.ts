@@ -15,7 +15,6 @@ import { createEmptyBook } from '../../book.factory';
   styleUrl: './book-form.css'
 })
 export class BookForm implements OnInit {
-  // Bez knihy = režim „pridať“, s knihou = režim „upraviť“.
   book = input<Book>();
   saved = output<Book>();
   cancelled = output<void>();
@@ -29,7 +28,6 @@ export class BookForm implements OnInit {
   ngOnInit(): void {
     const book = this.book();
     if (book) {
-      // Kópia – formulár mení iba koncept, originál sa nahradí až po uložení.
       this.draft = { ...book };
     }
   }
@@ -41,7 +39,6 @@ export class BookForm implements OnInit {
   save(form: NgForm): void {
     this.saved.emit({ ...this.draft });
 
-    // Pri úprave formulár zatvorí karta, pri pridaní ho vyčistíme.
     if (!this.isEditMode()) {
       this.draft = createEmptyBook();
       form.resetForm(this.draft);

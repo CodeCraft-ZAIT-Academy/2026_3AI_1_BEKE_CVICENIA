@@ -1,4 +1,3 @@
-/* Panely Pridať knihu a Košík – rovnaký štýl ako karty. */
 mat-accordion {
   display: grid;
   gap: 24px;
@@ -9,7 +8,6 @@ mat-expansion-panel {
   box-shadow: 12px 12px 0 #000000 !important;
 }
 
-/* Každý panel má vlastnú farbu hlavičky – aj pri prejdení myšou. */
 .panel-add {
   --panel-color: #c084fc;
 }
@@ -50,7 +48,6 @@ mat-panel-description {
   margin-right: 8px;
 }
 
-/* Počet výpožičiek ako štítok. */
 .borrowed-count {
   padding: 4px 8px;
   font-size: 0.8rem;
@@ -61,12 +58,10 @@ mat-panel-description {
   font-weight: 900;
 }
 
-/* Miesto pre tieň formulára a košíka vo vnútri panelu. */
 mat-expansion-panel ::ng-deep .mat-expansion-panel-body {
   padding: 20px 28px 32px 20px;
 }
 
-/* Hľadanie, filter a zoradenie – na mobile sa zalomia pod seba. */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -94,7 +89,6 @@ mat-button-toggle-group {
   text-transform: uppercase;
 }
 
-/* Dva stĺpce: vľavo panely, vpravo zoznam kníh. */
 .layout {
   display: grid;
   grid-template-columns: 360px minmax(0, 1fr);
@@ -102,8 +96,6 @@ mat-button-toggle-group {
   align-items: start;
 }
 
-/* Panely ostávajú pri scrollovaní na mieste. Ak sú vyššie ako okno, dajú sa scrollovať samostatne
-   (padding nechá miesto pre tieň). */
 .sidebar {
   position: sticky;
   top: 24px;
@@ -118,7 +110,6 @@ section {
   gap: 30px;
 }
 
-/* Karty v mriežke – koľko sa zmestí vedľa seba. */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
@@ -129,7 +120,6 @@ section {
   grid-column: 1 / -1;
 }
 
-/* Na užšej obrazovke je všetko pod sebou, panely nad zoznamom. */
 @media (max-width: 1100px) {
   .layout {
     grid-template-columns: minmax(0, 1fr);
@@ -160,7 +150,6 @@ h2 {
   text-transform: uppercase;
 }
 
-/* Správa z @empty bloku, keď v poli nie je žiadna kniha. */
 .empty {
   margin: 0;
   padding: 26px;
@@ -210,7 +199,6 @@ h2 {
   color: #fde047;
 }
 
-/* Na mobile menšia hlavička panelu, aby sa zmestil počet výpožičiek. */
 @media (max-width: 600px) {
   mat-expansion-panel-header {
     padding: 10px 12px;

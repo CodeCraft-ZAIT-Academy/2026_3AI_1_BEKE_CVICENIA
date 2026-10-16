@@ -16,7 +16,6 @@ import { getGenreColor } from '../../genre-colors';
 export class BookCard {
   book = input.required<Book>();
 
-  // Karta knihu nemení – iba oznámi rodičovi, čo sa stalo.
   borrowed = output<void>();
   returned = output<void>();
   favoriteToggled = output<void>();

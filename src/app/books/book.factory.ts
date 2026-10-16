@@ -1,6 +1,5 @@
 import { Book } from './book';
 
-// Nová prázdna kniha s predvolenými hodnotami (napr. pre formulár).
 export function createEmptyBook(): Book {
   return {
     id: 0,

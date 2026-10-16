@@ -44,7 +44,6 @@ export class BookList {
   currentPage: number = 1;
   pageSize: number = 6;
 
-  // Hľadanie, filter a zoradenie robí služba – komponent jej iba pošle nastavenia.
   visibleBooks(): Book[] {
     return this.bookService.getFilteredBooks(this.searchText, this.availability, this.sortBy);
   }
@@ -54,7 +53,6 @@ export class BookList {
     this.firstPage();
   }
 
-  // Služba mení svoje pole – komponent si po každej zmene načíta aktuálny zoznam.
   refreshBooks(): void {
     this.books = this.bookService.getBooks();
   }
@@ -109,7 +107,6 @@ export class BookList {
     this.refreshBooks();
   }
 
-  // Aspoň 1 strana, aj keď sa nič nenašlo.
   pageCount(): number {
     return Math.max(1, Math.ceil(this.visibleBooks().length / this.pageSize));
   }

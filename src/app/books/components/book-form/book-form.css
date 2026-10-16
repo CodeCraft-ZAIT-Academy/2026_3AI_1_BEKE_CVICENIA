@@ -1,4 +1,3 @@
-/* Polia v mriežke – na úzkej obrazovke sa zalomia pod seba. */
 .book-form {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -27,7 +26,6 @@
   text-transform: uppercase;
 }
 
-/* Farby Material tlačidiel sa menia cez ich CSS premenné. */
 .btn {
   --mat-button-text-label-text-color: #000000;
   --mat-button-filled-label-text-color: #000000;
@@ -50,7 +48,6 @@
   box-shadow: 8px 8px 0 #000000;
 }
 
-/* Kliknutie tlačidlo „zatlačí“ do tieňa. */
 .btn:active:not(:disabled) {
   transform: translate(6px, 6px);
   box-shadow: 0 0 0 #000000;

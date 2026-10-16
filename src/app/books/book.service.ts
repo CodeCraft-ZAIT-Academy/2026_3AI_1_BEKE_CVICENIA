@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { Book } from './book';
 import { generateBooks } from './book-generator';
 
-// Spoločný správca kníh – dáta a operácie s nimi sú na jednom mieste.
 @Injectable({ providedIn: 'root' })
 export class BookService {
-  // Počiatočné knihy sú interný detail služby – ostatní používajú getBooks().
   private readonly myBooks: Book[] = [
     {
       id: 1,
@@ -42,12 +40,10 @@ export class BookService {
     }
   ];
 
-  // Musí byť nad books – limitBorrowed() ho používa už pri vytváraní books.
   readonly maxBorrowed: number = 10;
 
   private books: Book[] = this.limitBorrowed(this.myBooks.concat(generateBooks(40, 4)));
 
-  // Od 11. vypožičanej knihy ďalej sú knihy dostupné.
   limitBorrowed(books: Book[]): Book[] {
     let borrowedCount = 0;
 
@@ -64,7 +60,6 @@ export class BookService {
     });
   }
 
-  // Kópia poľa – komponent nedostane priamo pole služby.
   getBooks(): Book[] {
     return [...this.books];
   }
@@ -114,13 +109,11 @@ export class BookService {
     return this.books.filter(book => book.favorite).length;
   }
 
-  // Iba otázka „môžem?“ – nič nemení.
   canBorrowBook(id: number): boolean {
     const book = this.getBookById(id);
     return !!book && book.available && this.borrowedBooks().length < this.maxBorrowed;
   }
 
-  // false = kniha neexistuje, je už vypožičaná alebo je naplnený limit.
   borrowBook(id: number): boolean {
     if (!this.canBorrowBook(id)) {
       return false;
@@ -138,7 +131,6 @@ export class BookService {
     this.books = this.books.map(book => (book.id === id ? { ...book, favorite: !book.favorite } : book));
   }
 
-  // Hľadanie, filter a zoradenie – pôvodné pole books sa nemení.
   getFilteredBooks(searchText: string, availability: string, sortBy: string): Book[] {
     const text = searchText.trim().toLowerCase();
 

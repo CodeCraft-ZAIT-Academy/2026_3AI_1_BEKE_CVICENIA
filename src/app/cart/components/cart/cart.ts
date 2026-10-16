@@ -13,7 +13,6 @@ import { getGenreColor } from '../../../books/genre-colors';
 export class Cart {
   books = input.required<Book[]>();
 
-  // Košík knihy nemení – vrátenie oznámi rodičovi.
   returned = output<Book>();
   returnedAll = output<void>();
 

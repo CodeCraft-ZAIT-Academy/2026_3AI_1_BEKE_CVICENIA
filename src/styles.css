@@ -1,11 +1,9 @@
-/* Globálne štýly – platia pre celú aplikáciu, nie pre jeden komponent. */
 html,
 body {
   margin: 0;
   padding: 0;
 }
 
-/* Brutalizmus pre všetky Material komponenty – ostré rohy, čierne rámy, hrubé písmo. */
 html {
   --mat-sys-corner-extra-small: 0px;
   --mat-sys-corner-small: 0px;
@@ -14,7 +12,6 @@ html {
   --mat-sys-corner-extra-large: 0px;
   --mat-sys-corner-full: 0px;
 
-  /* Form field (outline) */
   --mat-form-field-outlined-outline-color: #000000;
   --mat-form-field-outlined-hover-outline-color: #000000;
   --mat-form-field-outlined-focus-outline-color: #000000;
@@ -33,7 +30,6 @@ html {
   --mat-form-field-leading-icon-color: #000000;
   --mat-form-field-trailing-icon-color: #000000;
 
-  /* Select */
   --mat-select-enabled-arrow-color: #000000;
   --mat-select-focused-arrow-color: #000000;
   --mat-select-enabled-trigger-text-color: #000000;
@@ -44,7 +40,6 @@ html {
   --mat-option-hover-state-layer-color: #c084fc;
   --mat-option-focus-state-layer-color: transparent;
 
-  /* Button toggle */
   --mat-button-toggle-shape: 0px;
   --mat-button-toggle-divider-color: #000000;
   --mat-button-toggle-text-color: #000000;
@@ -53,7 +48,6 @@ html {
   --mat-button-toggle-selected-state-text-color: #fde047;
   --mat-button-toggle-label-text-weight: 900;
 
-  /* Expansion panel */
   --mat-expansion-container-shape: 0px;
   --mat-expansion-container-background-color: #ffffff;
   --mat-expansion-header-text-weight: 900;
@@ -62,7 +56,6 @@ html {
   --mat-expansion-header-description-color: #000000;
 }
 
-/* Vstupné polia majú biele pozadie a ostrý tieň. */
 .mat-mdc-form-field .mdc-text-field--outlined {
   background-color: #ffffff;
   box-shadow: 5px 5px 0 #000000;
@@ -72,9 +65,6 @@ html {
   font-weight: 700;
 }
 
-/* Rozbaľovací zoznam mat-select je v overlay mimo komponentu – štýl musí byť globálny.
-   Trieda overlay pred selektorom zosilní náš štýl (Material sa načíta až po styles.css),
-   inak by vo Firefoxe bol zoznam priehľadný. */
 .cdk-overlay-popover div.mat-mdc-select-panel,
 .cdk-overlay-container div.mat-mdc-select-panel {
   padding: 0;

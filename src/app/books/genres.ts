@@ -1,4 +1,3 @@
-// Žánre, ktoré používa generátor kníh (faker.book.genre()).
 export const GENRES: string[] = [
   'Adventure',
   'Biography',

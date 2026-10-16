@@ -2,7 +2,6 @@
   display: block;
 }
 
-/* Material karta v našom štýle – hrubý čierny rám a ostrý tieň. */
 .book-card {
   height: 100%;
   box-sizing: border-box;
@@ -42,7 +41,6 @@
   color: #27272a;
 }
 
-/* Stav dostupnosti ako výrazný štítok. */
 .book-card .status {
   display: inline-block;
   margin: 12px 0 4px;
@@ -68,7 +66,6 @@
   padding: 16px;
 }
 
-/* Tlačidlá Detail / Vypožičať / Vrátiť. */
 .book-card .btn {
   height: auto;
   padding: 10px 14px;
@@ -98,7 +95,6 @@
   box-shadow: 8px 8px 0 #000000;
 }
 
-/* Kliknutie tlačidlo „zatlačí“ do tieňa. */
 .book-card .btn:active:not(:disabled) {
   transform: translate(6px, 6px);
   box-shadow: 0 0 0 #000000;
@@ -120,7 +116,6 @@
   color: #ffffff;
 }
 
-/* Ikony vpravo hore v hlavičke karty. */
 .book-card mat-card-header {
   flex-wrap: wrap;
   align-items: center;
@@ -132,7 +127,6 @@
   margin-left: auto;
 }
 
-/* Názov a autor pod ikonami na celú šírku karty. */
 .book-card mat-card-header ::ng-deep .mat-mdc-card-header-text {
   order: 3;
   flex-basis: 100%;
@@ -144,7 +138,6 @@
   padding: 0;
 }
 
-/* Ikona žánru vľavo od názvu. */
 .genre-icon {
   display: flex;
   align-items: center;
@@ -161,7 +154,6 @@
   color: #000000;
 }
 
-/* Vypožičaná kniha – sivá karta so sivým tieňom. */
 .book-card.unavailable {
   background-color: #e4e4e7;
   box-shadow: 12px 12px 0 #71717a;
@@ -171,7 +163,6 @@
   color: #52525b;
 }
 
-/* Obľúbená kniha – oranžový tieň. */
 .book-card.favorite {
   background-color: #fffbeb;
   box-shadow: 12px 12px 0 #f59e0b;
@@ -182,7 +173,6 @@
   font-variation-settings: 'FILL' 1;
 }
 
-/* V mriežke majú karty rovnakú výšku – tlačidlá sú vždy dole. */
 .book-card mat-card-actions {
   margin-top: auto;
 }

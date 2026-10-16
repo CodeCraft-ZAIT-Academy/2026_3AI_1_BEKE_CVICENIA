@@ -21,7 +21,6 @@
     <mat-card-title>{{ book().title }}</mat-card-title>
     <mat-card-subtitle>{{ book().author }}</mat-card-subtitle>
 
-    <!-- Hviezdička, úprava a mazanie vpravo hore – iba v normálnom stave karty. -->
     @if (!editing && !confirmingDelete) {
       <div class="card-tools">
         <button matIconButton class="btn-icon" (click)="toggleFavorite()">
