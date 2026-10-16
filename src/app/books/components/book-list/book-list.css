@@ -6,22 +6,61 @@ mat-accordion {
 
 mat-expansion-panel {
   border: 5px solid #000000;
-  border-radius: 0 !important;
   box-shadow: 12px 12px 0 #000000 !important;
+}
+
+/* Každý panel má vlastnú farbu hlavičky – aj pri prejdení myšou. */
+.panel-add {
+  --panel-color: #c084fc;
+}
+
+.panel-cart {
+  --panel-color: #06b6d4;
+}
+
+mat-expansion-panel {
+  --mat-expansion-header-hover-state-layer-color: var(--panel-color);
+  --mat-expansion-header-focus-state-layer-color: var(--panel-color);
+}
+
+mat-expansion-panel-header {
+  height: auto;
+  min-height: 64px;
+  padding: 12px 20px;
+  background-color: var(--panel-color);
+}
+
+mat-expansion-panel-header.mat-expanded {
+  border-bottom: 5px solid #000000;
 }
 
 mat-panel-title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  font-size: 1.15rem;
   font-weight: 900;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 mat-panel-description {
   justify-content: flex-end;
+}
+
+/* Počet výpožičiek ako štítok. */
+.borrowed-count {
+  padding: 4px 10px;
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
   font-family: "Courier New", Consolas, monospace;
-  font-weight: 800;
+  font-weight: 900;
+}
+
+/* Miesto pre tieň formulára a košíka vo vnútri panelu. */
+mat-expansion-panel ::ng-deep .mat-expansion-panel-body {
+  padding: 20px 28px 32px 20px;
 }
 
 /* Hľadanie, filter a zoradenie – na mobile sa zalomia pod seba. */
@@ -48,12 +87,13 @@ mat-panel-description {
 mat-button-toggle-group {
   margin-bottom: 22px;
   border: 4px solid #000000;
-  border-radius: 0;
-  font-weight: 800;
+  box-shadow: 5px 5px 0 #000000;
+  text-transform: uppercase;
 }
 
 section {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 30px;
 }
 
@@ -111,4 +151,28 @@ h2 {
   border-color: #71717a;
   box-shadow: 6px 6px 0 #a1a1aa;
   color: #71717a;
+}
+
+.pagination button:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 #000000;
+}
+
+.pagination span {
+  white-space: nowrap;
+  padding: 8px 14px;
+  background-color: #000000;
+  color: #fde047;
+}
+
+/* Na mobile menšia hlavička panelu, aby sa zmestil počet výpožičiek. */
+@media (max-width: 600px) {
+  mat-expansion-panel-header {
+    padding: 10px 12px;
+  }
+
+  .borrowed-count {
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
 }

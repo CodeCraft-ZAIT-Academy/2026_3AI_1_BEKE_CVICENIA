@@ -1,6 +1,6 @@
 <section>
   <mat-accordion multi>
-    <mat-expansion-panel #addPanel>
+    <mat-expansion-panel #addPanel class="panel-add">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon>add_circle</mat-icon>
@@ -11,14 +11,14 @@
       <app-book-form (saved)="addBook($event); addPanel.close()"></app-book-form>
     </mat-expansion-panel>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel class="panel-cart">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon>shopping_cart</mat-icon>
           Košík
         </mat-panel-title>
         <mat-panel-description>
-          Požičané knihy: {{ borrowedBooks().length }} / {{ maxBorrowed }}
+          <span class="borrowed-count">Požičané knihy: {{ borrowedBooks().length }} / {{ maxBorrowed }}</span>
         </mat-panel-description>
       </mat-expansion-panel-header>
 

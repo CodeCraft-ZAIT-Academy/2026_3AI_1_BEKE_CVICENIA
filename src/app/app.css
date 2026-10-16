@@ -17,8 +17,30 @@ main {
   padding: 56px 0 80px;
 }
 
+/* Horná lišta – čierny pruh s hrubým okrajom. */
 .toolbar {
   gap: 12px;
-  background-color: #1f3a5f;
-  color: white;
+  height: auto;
+  padding: 18px 4%;
+  background-color: #000000;
+  border-bottom: 8px solid #fb7185;
+  color: #fde047;
+  font-size: 1.4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.toolbar mat-icon {
+  width: 36px;
+  height: 36px;
+  font-size: 36px;
+}
+
+/* Na mobile sa dlhý názov zalomí a je menší. */
+@media (max-width: 600px) {
+  .toolbar {
+    font-size: 1rem;
+    white-space: normal;
+  }
 }

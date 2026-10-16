@@ -5,8 +5,89 @@ body {
   padding: 0;
 }
 
-/* Firefox nenastaví pozadie rozbaľovaciemu zoznamu mat-select (je v overlay mimo komponentu). */
+/* Brutalizmus pre všetky Material komponenty – ostré rohy, čierne rámy, hrubé písmo. */
+html {
+  --mat-sys-corner-extra-small: 0px;
+  --mat-sys-corner-small: 0px;
+  --mat-sys-corner-medium: 0px;
+  --mat-sys-corner-large: 0px;
+  --mat-sys-corner-extra-large: 0px;
+  --mat-sys-corner-full: 0px;
+
+  /* Form field (outline) */
+  --mat-form-field-outlined-outline-color: #000000;
+  --mat-form-field-outlined-hover-outline-color: #000000;
+  --mat-form-field-outlined-focus-outline-color: #000000;
+  --mat-form-field-outlined-error-outline-color: #dc2626;
+  --mat-form-field-outlined-error-focus-outline-color: #dc2626;
+  --mat-form-field-outlined-error-hover-outline-color: #dc2626;
+  --mat-form-field-outlined-outline-width: 4px;
+  --mat-form-field-outlined-focus-outline-width: 4px;
+  --mat-form-field-outlined-label-text-color: #000000;
+  --mat-form-field-outlined-focus-label-text-color: #000000;
+  --mat-form-field-outlined-hover-label-text-color: #000000;
+  --mat-form-field-outlined-label-text-weight: 800;
+  --mat-form-field-outlined-input-text-color: #000000;
+  --mat-form-field-error-text-color: #b91c1c;
+  --mat-form-field-subscript-text-weight: 800;
+  --mat-form-field-leading-icon-color: #000000;
+  --mat-form-field-trailing-icon-color: #000000;
+
+  /* Select */
+  --mat-select-enabled-arrow-color: #000000;
+  --mat-select-focused-arrow-color: #000000;
+  --mat-select-enabled-trigger-text-color: #000000;
+  --mat-select-trigger-text-weight: 800;
+  --mat-option-label-text-weight: 700;
+  --mat-option-selected-state-layer-color: #fde047;
+  --mat-option-selected-state-label-text-color: #000000;
+  --mat-option-hover-state-layer-color: #c084fc;
+  --mat-option-focus-state-layer-color: transparent;
+
+  /* Button toggle */
+  --mat-button-toggle-shape: 0px;
+  --mat-button-toggle-divider-color: #000000;
+  --mat-button-toggle-text-color: #000000;
+  --mat-button-toggle-background-color: #ffffff;
+  --mat-button-toggle-selected-state-background-color: #000000;
+  --mat-button-toggle-selected-state-text-color: #fde047;
+  --mat-button-toggle-label-text-weight: 900;
+
+  /* Expansion panel */
+  --mat-expansion-container-shape: 0px;
+  --mat-expansion-container-background-color: #ffffff;
+  --mat-expansion-header-text-weight: 900;
+  --mat-expansion-header-indicator-color: #000000;
+  --mat-expansion-header-text-color: #000000;
+  --mat-expansion-header-description-color: #000000;
+}
+
+/* Vstupné polia majú biele pozadie a ostrý tieň. */
+.mat-mdc-form-field .mdc-text-field--outlined {
+  background-color: #ffffff;
+  box-shadow: 5px 5px 0 #000000;
+}
+
+.mat-mdc-form-field input {
+  font-weight: 700;
+}
+
+/* Rozbaľovací zoznam mat-select je v overlay mimo komponentu – štýl musí byť globálny.
+   Trieda overlay pred selektorom zosilní náš štýl (Material sa načíta až po styles.css),
+   inak by vo Firefoxe bol zoznam priehľadný. */
 .cdk-overlay-popover div.mat-mdc-select-panel,
 .cdk-overlay-container div.mat-mdc-select-panel {
-  background-color: #f4f6f8;
+  padding: 0;
+  background-color: #ffffff;
+  border: 4px solid #000000;
+  box-shadow: 8px 8px 0 #000000;
+}
+
+.mat-mdc-option {
+  border-bottom: 2px solid #000000;
+  text-transform: uppercase;
+}
+
+.cdk-overlay-container .mat-mdc-option.mdc-list-item--selected {
+  background-color: #fde047;
 }

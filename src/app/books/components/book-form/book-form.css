@@ -15,6 +15,7 @@
 }
 
 .btn {
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
   height: auto;
   padding: 11px 18px;
   background-color: #ffffff;
@@ -26,8 +27,15 @@
   text-transform: uppercase;
 }
 
+/* Farby Material tlačidiel sa menia cez ich CSS premenné. */
+.btn {
+  --mat-button-text-label-text-color: #000000;
+  --mat-button-filled-label-text-color: #000000;
+  --mat-button-filled-container-color: #ffffff;
+}
+
 .btn-save {
-  background-color: #4ade80;
+  --mat-button-filled-container-color: #4ade80;
 }
 
 .btn:disabled {
@@ -35,4 +43,15 @@
   border-color: #71717a;
   box-shadow: 6px 6px 0 #a1a1aa;
   color: #71717a;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 #000000;
+}
+
+/* Kliknutie tlačidlo „zatlačí“ do tieňa. */
+.btn:active:not(:disabled) {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 #000000;
 }
