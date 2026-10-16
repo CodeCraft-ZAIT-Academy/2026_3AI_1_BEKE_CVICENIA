@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,16 +11,15 @@ import { genreColor } from '../../genre-color';
   selector: 'app-book-card',
   imports: [MatCardModule, MatButtonModule, MatIconModule, BookDetail, BookForm],
   templateUrl: './book-card.html',
-  styleUrl: './book-card.css',
-  // Knihu môže vrátiť aj košík – karta sa musí kontrolovať vždy,
-  // inak by ostala sivá (predvolené OnPush sleduje iba nové inputy).
-  changeDetection: ChangeDetectionStrategy.Eager
+  styleUrl: './book-card.css'
 })
 export class BookCard {
   book = input.required<Book>();
 
-  // Požičanie povolí až BookList – ten pozná limit výpožičiek.
+  // Karta knihu nemení – iba oznámi rodičovi, čo sa stalo.
   borrowed = output<void>();
+  returned = output<void>();
+  favoriteToggled = output<void>();
   edited = output<Book>();
   deleted = output<void>();
 
@@ -33,7 +32,7 @@ export class BookCard {
   }
 
   toggleFavorite(): void {
-    this.book().favorite = !this.book().favorite;
+    this.favoriteToggled.emit();
   }
 
   borrow(): void {
@@ -41,7 +40,7 @@ export class BookCard {
   }
 
   giveBack(): void {
-    this.book().available = true;
+    this.returned.emit();
   }
 
   startEdit(): void {

@@ -22,7 +22,7 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <app-cart [books]="books"></app-cart>
+      <app-cart [books]="books" (returned)="giveBack($event)" (returnedAll)="giveBackAll()"></app-cart>
     </mat-expansion-panel>
   </mat-accordion>
 
@@ -68,6 +68,8 @@
       <app-book-card
         [book]="book"
         (borrowed)="borrow(book)"
+        (returned)="giveBack(book)"
+        (favoriteToggled)="toggleFavorite(book)"
         (edited)="updateBook($event)"
         (deleted)="deleteBook(book)">
       </app-book-card>
