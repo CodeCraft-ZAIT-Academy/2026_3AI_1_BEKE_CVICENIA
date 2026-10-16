@@ -1,26 +1,55 @@
-/* Zoznam kníh vľavo, košík vpravo. */
-.layout {
+/* Panely Pridať knihu a Košík – rovnaký štýl ako karty. */
+mat-accordion {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
-  gap: 48px;
-  align-items: start;
+  gap: 24px;
 }
 
-app-cart {
-  position: sticky;
-  top: 24px;
+mat-expansion-panel {
+  border: 5px solid #000000;
+  border-radius: 0 !important;
+  box-shadow: 12px 12px 0 #000000 !important;
 }
 
-/* Na úzkej obrazovke je košík nad zoznamom. */
-@media (max-width: 960px) {
-  .layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
+mat-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
 
-  app-cart {
-    position: static;
-    order: -1;
-  }
+mat-panel-description {
+  justify-content: flex-end;
+  font-family: "Courier New", Consolas, monospace;
+  font-weight: 800;
+}
+
+/* Hľadanie, filter a zoradenie – na mobile sa zalomia pod seba. */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 18px 18px 0;
+  background-color: #ffffff;
+  border: 5px solid #000000;
+  box-shadow: 12px 12px 0 #000000;
+}
+
+.search {
+  flex: 1;
+  min-width: 240px;
+}
+
+.sort {
+  min-width: 220px;
+}
+
+mat-button-toggle-group {
+  margin-bottom: 22px;
+  border: 4px solid #000000;
+  border-radius: 0;
+  font-weight: 800;
 }
 
 section {

@@ -105,7 +105,33 @@
   color: #71717a;
 }
 
-.book-card .btn-favorite {
+.book-card .btn-icon {
+  color: #000000;
+}
+
+.book-card .btn-danger {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* Ikona žánru vľavo od názvu. */
+.genre-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 4px solid #000000;
+  border-radius: 0;
+}
+
+.book-card .confirm {
+  padding: 14px 16px;
+  background-color: #fecaca;
+  border: 4px solid #000000;
   color: #000000;
 }
 

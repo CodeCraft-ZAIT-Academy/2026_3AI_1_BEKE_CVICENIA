@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Book } from '../book';
-import { genreColor } from '../genre-color';
+import { Book } from '../../../books/book';
+import { genreColor } from '../../../books/genre-color';
 
 @Component({
   selector: 'app-cart',

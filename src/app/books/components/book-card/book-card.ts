@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Book } from '../book';
+import { Book } from '../../book';
 import { BookDetail } from '../book-detail/book-detail';
-import { genreColor } from '../genre-color';
+import { BookForm } from '../book-form/book-form';
+import { genreColor } from '../../genre-color';
 
 @Component({
   selector: 'app-book-card',
-  imports: [MatCardModule, MatButtonModule, MatIconModule, BookDetail],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, BookDetail, BookForm],
   templateUrl: './book-card.html',
   styleUrl: './book-card.css',
   // Knihu môže vrátiť aj košík – karta sa musí kontrolovať vždy,
@@ -17,7 +18,15 @@ import { genreColor } from '../genre-color';
 })
 export class BookCard {
   book = input.required<Book>();
+
+  // Požičanie povolí až BookList – ten pozná limit výpožičiek.
+  borrowed = output<void>();
+  edited = output<Book>();
+  deleted = output<void>();
+
   showDetails: boolean = false;
+  editing: boolean = false;
+  confirmingDelete: boolean = false;
 
   toggleDetails(): void {
     this.showDetails = !this.showDetails;
@@ -28,11 +37,36 @@ export class BookCard {
   }
 
   borrow(): void {
-    this.book().available = false;
+    this.borrowed.emit();
   }
 
   giveBack(): void {
     this.book().available = true;
+  }
+
+  startEdit(): void {
+    this.editing = true;
+  }
+
+  saveEdit(book: Book): void {
+    this.edited.emit(book);
+    this.editing = false;
+  }
+
+  cancelEdit(): void {
+    this.editing = false;
+  }
+
+  askDelete(): void {
+    this.confirmingDelete = true;
+  }
+
+  cancelDelete(): void {
+    this.confirmingDelete = false;
+  }
+
+  confirmDelete(): void {
+    this.deleted.emit();
   }
 
   genreColor(): string {
