@@ -5,7 +5,8 @@ import { generateBooks } from './book-generator';
 // Spoločný správca kníh – dáta a operácie s nimi sú na jednom mieste.
 @Injectable({ providedIn: 'root' })
 export class BookService {
-  myBooks: Book[] = [
+  // Počiatočné knihy sú interný detail služby – ostatní používajú getBooks().
+  private readonly myBooks: Book[] = [
     {
       id: 1,
       title: 'Hobit',
@@ -85,9 +86,43 @@ export class BookService {
     return this.books.filter(book => !book.available);
   }
 
-  // false = limit je naplnený, kniha sa nepožičala.
+  getBookById(id: number): Book | undefined {
+    return this.books.find(book => book.id === id);
+  }
+
+  getAvailableBooks(): Book[] {
+    return this.books.filter(book => book.available);
+  }
+
+  getFavoriteBooks(): Book[] {
+    return this.books.filter(book => book.favorite);
+  }
+
+  getTotalBooksCount(): number {
+    return this.books.length;
+  }
+
+  getBorrowedBooksCount(): number {
+    return this.borrowedBooks().length;
+  }
+
+  countAvailableBooks(): number {
+    return this.books.filter(book => book.available).length;
+  }
+
+  countFavoriteBooks(): number {
+    return this.books.filter(book => book.favorite).length;
+  }
+
+  // Iba otázka „môžem?“ – nič nemení.
+  canBorrowBook(id: number): boolean {
+    const book = this.getBookById(id);
+    return !!book && book.available && this.borrowedBooks().length < this.maxBorrowed;
+  }
+
+  // false = kniha neexistuje, je už vypožičaná alebo je naplnený limit.
   borrowBook(id: number): boolean {
-    if (this.borrowedBooks().length >= this.maxBorrowed) {
+    if (!this.canBorrowBook(id)) {
       return false;
     }
 
@@ -101,5 +136,34 @@ export class BookService {
 
   toggleFavorite(id: number): void {
     this.books = this.books.map(book => (book.id === id ? { ...book, favorite: !book.favorite } : book));
+  }
+
+  // Hľadanie, filter a zoradenie – pôvodné pole books sa nemení.
+  getFilteredBooks(searchText: string, availability: string, sortBy: string): Book[] {
+    const text = searchText.trim().toLowerCase();
+
+    let result = this.books.filter(book =>
+      book.title.toLowerCase().includes(text) || book.author.toLowerCase().includes(text)
+    );
+
+    if (availability === 'available') {
+      result = result.filter(book => book.available);
+    } else if (availability === 'borrowed') {
+      result = result.filter(book => !book.available);
+    }
+
+    switch (sortBy) {
+      case 'title':
+        result = [...result].sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'year':
+        result = [...result].sort((a, b) => b.year - a.year);
+        break;
+      case 'rating':
+        result = [...result].sort((a, b) => b.rating - a.rating);
+        break;
+    }
+
+    return result;
   }
 }

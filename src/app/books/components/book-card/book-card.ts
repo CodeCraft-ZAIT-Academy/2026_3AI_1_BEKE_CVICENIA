@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Book } from '../../book';
 import { BookDetail } from '../book-detail/book-detail';
 import { BookForm } from '../book-form/book-form';
-import { genreColor } from '../../genre-color';
+import { getGenreColor } from '../../genre-colors';
 
 @Component({
   selector: 'app-book-card',
@@ -69,6 +69,6 @@ export class BookCard {
   }
 
   genreColor(): string {
-    return genreColor(this.book().genre);
+    return getGenreColor(this.book().genre);
   }
 }

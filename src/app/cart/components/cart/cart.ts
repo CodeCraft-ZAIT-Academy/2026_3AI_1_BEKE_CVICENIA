@@ -2,7 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Book } from '../../../books/book';
-import { genreColor } from '../../../books/genre-color';
+import { getGenreColor } from '../../../books/genre-colors';
 
 @Component({
   selector: 'app-cart',
@@ -30,6 +30,6 @@ export class Cart {
   }
 
   genreColor(book: Book): string {
-    return genreColor(book.genre);
+    return getGenreColor(book.genre);
   }
 }

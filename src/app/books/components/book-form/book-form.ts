@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { Book } from '../../book';
 import { GENRES } from '../../genres';
+import { createEmptyBook } from '../../book.factory';
 
 @Component({
   selector: 'app-book-form',
@@ -23,7 +24,7 @@ export class BookForm implements OnInit {
   ratings: number[] = [1, 2, 3, 4, 5];
   currentYear: number = new Date().getFullYear();
 
-  draft: Book = this.emptyBook();
+  draft: Book = createEmptyBook();
 
   ngOnInit(): void {
     const book = this.book();
@@ -42,26 +43,12 @@ export class BookForm implements OnInit {
 
     // Pri úprave formulár zatvorí karta, pri pridaní ho vyčistíme.
     if (!this.isEditMode()) {
-      this.draft = this.emptyBook();
+      this.draft = createEmptyBook();
       form.resetForm(this.draft);
     }
   }
 
   cancel(): void {
     this.cancelled.emit();
-  }
-
-  emptyBook(): Book {
-    return {
-      id: 0,
-      title: '',
-      author: '',
-      year: this.currentYear,
-      available: true,
-      genre: '',
-      rating: 3,
-      pages: 100,
-      favorite: false
-    };
   }
 }
