@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,113 +34,113 @@ import { BookService } from '../../book.service';
 export class BookList {
   private bookService = inject(BookService);
 
-  maxBorrowed: number = this.bookService.maxBorrowed;
-  books: Book[] = this.bookService.getBooks();
+  readonly books = this.bookService.books;
+  readonly borrowedBooks = this.bookService.borrowedBooks;
+  readonly availableBooks = this.bookService.availableBooks;
+  readonly maxBorrowed = this.bookService.maxBorrowed;
 
-  searchText: string = '';
-  availability: string = 'all';
-  sortBy: string = 'none';
+  readonly totalBooks = computed(() => this.books().length);
 
-  currentPage: number = 1;
-  pageSize: number = 6;
+  readonly searchText = signal('');
+  readonly availability = signal('all');
+  readonly sortBy = signal('none');
+  readonly favoritesOnly = signal(false);
 
-  visibleBooks(): Book[] {
-    return this.bookService.getFilteredBooks(this.searchText, this.availability, this.sortBy);
-  }
+  readonly visibleBooks = computed(() => {
+    const list = this.bookService.getFilteredBooks(
+      this.searchText(),
+      this.availability(),
+      this.sortBy()
+    );
+    return this.favoritesOnly() ? list.filter(book => book.favorite) : list;
+  });
+
+  readonly currentPage = signal(1);
+  readonly pageSize = signal(6);
+
+  readonly pageCount = computed(() =>
+    Math.max(1, Math.ceil(this.visibleBooks().length / this.pageSize()))
+  );
+
+  readonly firstShown = computed(() => (this.currentPage() - 1) * this.pageSize() + 1);
+
+  readonly lastShown = computed(() =>
+    Math.min(this.currentPage() * this.pageSize(), this.visibleBooks().length)
+  );
+
+  readonly pagedBooks = computed(() => {
+    const start = (this.currentPage() - 1) * this.pageSize();
+    return this.visibleBooks().slice(start, start + this.pageSize());
+  });
 
   clearSearch(): void {
-    this.searchText = '';
+    this.searchText.set('');
     this.firstPage();
   }
 
-  refreshBooks(): void {
-    this.books = this.bookService.getBooks();
+  toggleFavoritesOnly(): void {
+    this.favoritesOnly.update(only => !only);
+    this.firstPage();
+  }
+
+  resetFilters(): void {
+    this.searchText.set('');
+    this.availability.set('all');
+    this.sortBy.set('none');
+    this.favoritesOnly.set(false);
+    this.firstPage();
   }
 
   addBook(book: Book): void {
     this.bookService.addBook(book);
-    this.refreshBooks();
     this.firstPage();
   }
 
   updateBook(updated: Book): void {
     this.bookService.updateBook(updated);
-    this.refreshBooks();
   }
 
   deleteBook(deleted: Book): void {
     this.bookService.deleteBook(deleted.id);
-    this.refreshBooks();
 
-    if (this.currentPage > this.pageCount()) {
+    if (this.currentPage() > this.pageCount()) {
       this.lastPage();
     }
-  }
-
-  borrowedBooks(): Book[] {
-    return this.bookService.borrowedBooks();
   }
 
   borrow(book: Book): void {
     if (!this.bookService.borrowBook(book.id)) {
       alert('Knihu teraz nie je možné vypožičať. Skontroluj dostupnosť a limit výpožičiek.');
-      return;
     }
-
-    this.refreshBooks();
   }
 
   giveBack(book: Book): void {
     this.bookService.returnBook(book.id);
-    this.refreshBooks();
   }
 
   giveBackAll(): void {
     for (const book of this.borrowedBooks()) {
       this.bookService.returnBook(book.id);
     }
-    this.refreshBooks();
   }
 
   toggleFavorite(book: Book): void {
     this.bookService.toggleFavorite(book.id);
-    this.refreshBooks();
-  }
-
-  pageCount(): number {
-    return Math.max(1, Math.ceil(this.visibleBooks().length / this.pageSize));
-  }
-
-  isOnCurrentPage(index: number): boolean {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return index >= start && index < start + this.pageSize;
   }
 
   previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
+    this.currentPage.update(page => Math.max(1, page - 1));
   }
 
   nextPage(): void {
-    if (this.currentPage < this.pageCount()) {
-      this.currentPage++;
-    }
+    this.currentPage.update(page => Math.min(this.pageCount(), page + 1));
   }
 
   firstPage(): void {
-    this.currentPage = 1;
+    this.currentPage.set(1);
   }
 
   lastPage(): void {
-    this.currentPage = this.pageCount();
-  }
-
-  firstShown(): number {
-    return (this.currentPage - 1) * this.pageSize + 1;
-  }
-
-  lastShown(): number {
-    return Math.min(this.currentPage * this.pageSize, this.visibleBooks().length);
+    this.currentPage.set(this.pageCount());
   }
 }
