@@ -2,14 +2,11 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BookCard } from '../book-card/book-card';
-import { BookForm } from '../book-form/book-form';
-import { Cart } from '../../../cart/components/cart/cart';
 import { Book } from '../../book';
 import { BookService } from '../../book.service';
 
@@ -17,12 +14,9 @@ import { BookService } from '../../book.service';
   selector: 'app-book-list',
   imports: [
     BookCard,
-    BookForm,
-    Cart,
     FormsModule,
     MatButtonModule,
     MatIconModule,
-    MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -35,9 +29,7 @@ export class BookList {
   private bookService = inject(BookService);
 
   readonly books = this.bookService.books;
-  readonly borrowedBooks = this.bookService.borrowedBooks;
   readonly availableBooks = this.bookService.availableBooks;
-  readonly maxBorrowed = this.bookService.maxBorrowed;
 
   readonly totalBooks = computed(() => this.books().length);
 
@@ -91,23 +83,6 @@ export class BookList {
     this.firstPage();
   }
 
-  addBook(book: Book): void {
-    this.bookService.addBook(book);
-    this.firstPage();
-  }
-
-  updateBook(updated: Book): void {
-    this.bookService.updateBook(updated);
-  }
-
-  deleteBook(deleted: Book): void {
-    this.bookService.deleteBook(deleted.id);
-
-    if (this.currentPage() > this.pageCount()) {
-      this.lastPage();
-    }
-  }
-
   borrow(book: Book): void {
     if (!this.bookService.borrowBook(book.id)) {
       alert('Knihu teraz nie je možné vypožičať. Skontroluj dostupnosť a limit výpožičiek.');
@@ -116,12 +91,6 @@ export class BookList {
 
   giveBack(book: Book): void {
     this.bookService.returnBook(book.id);
-  }
-
-  giveBackAll(): void {
-    for (const book of this.borrowedBooks()) {
-      this.bookService.returnBook(book.id);
-    }
   }
 
   toggleFavorite(book: Book): void {
@@ -138,9 +107,5 @@ export class BookList {
 
   firstPage(): void {
     this.currentPage.set(1);
-  }
-
-  lastPage(): void {
-    this.currentPage.set(this.pageCount());
   }
 }

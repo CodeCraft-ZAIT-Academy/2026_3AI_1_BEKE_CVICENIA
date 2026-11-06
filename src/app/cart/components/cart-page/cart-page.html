@@ -1,0 +1,10 @@
+<h1 class="page-title">Košík</h1>
+
+<p class="page-info">Požičané knihy: {{ borrowedBooks().length }} / {{ maxBorrowed }}</p>
+
+<app-cart [books]="borrowedBooks()" (returned)="giveBack($event)" (returnedAll)="giveBackAll()" />
+
+<a matButton class="page-btn back" routerLink="/books">
+  <mat-icon>arrow_back</mat-icon>
+  Pokračovať vo výbere kníh
+</a>

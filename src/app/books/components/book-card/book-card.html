@@ -1,6 +1,6 @@
 <mat-card
   class="book-card"
-  [class.unavailable]="!book().available && !editing()"
+  [class.unavailable]="!book().available"
   [class.favorite]="book().favorite"
   [style.border-left-color]="genreColor()">
   <mat-card-header>
@@ -21,65 +21,34 @@
     <mat-card-title>{{ book().title }}</mat-card-title>
     <mat-card-subtitle>{{ book().author }}</mat-card-subtitle>
 
-    @if (!editing() && !confirmingDelete()) {
-      <div class="card-tools">
-        <button matIconButton class="btn-icon" (click)="toggleFavorite()">
-          @if (book().favorite) {
-            <mat-icon class="favorite-icon">star</mat-icon>
-          } @else {
-            <mat-icon>star_border</mat-icon>
-          }
-        </button>
-
-        <button matIconButton class="btn-icon" (click)="startEdit()">
-          <mat-icon>edit</mat-icon>
-        </button>
-
-        <button matIconButton class="btn-icon" (click)="askDelete()">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    }
+    <div class="card-tools">
+      <button matIconButton class="btn-icon" (click)="toggleFavorite()">
+        @if (book().favorite) {
+          <mat-icon class="favorite-icon">star</mat-icon>
+        } @else {
+          <mat-icon>star_border</mat-icon>
+        }
+      </button>
+    </div>
   </mat-card-header>
 
-  @if (editing()) {
-    <mat-card-content>
-      <app-book-form [book]="book()" (saved)="saveEdit($event)" (cancelled)="cancelEdit()"></app-book-form>
-    </mat-card-content>
-  } @else if (confirmingDelete()) {
-    <mat-card-content>
-      <p class="confirm">Naozaj chceš zmazať knihu <strong>{{ book().title }}</strong>?</p>
-    </mat-card-content>
+  <mat-card-content>
+    @if (book().available) {
+      <p class="status">Kniha je dostupná.</p>
+    } @else {
+      <p class="status status-borrowed">Kniha je momentálne vypožičaná.</p>
+    }
+  </mat-card-content>
 
-    <mat-card-actions>
-      <button matButton class="btn btn-detail" (click)="cancelDelete()">Nie, ponechať</button>
-      <button matButton="filled" class="btn btn-danger" (click)="confirmDelete()">Áno, zmazať</button>
-    </mat-card-actions>
-  } @else {
-    <mat-card-content>
-      @if (book().available) {
-        <p class="status">Kniha je dostupná.</p>
-      } @else {
-        <p class="status status-borrowed">Kniha je momentálne vypožičaná.</p>
-      }
+  <mat-card-actions>
+    <a matButton class="btn btn-detail" [routerLink]="['/books', book().id]">Detail</a>
 
-      @if (showDetails()) {
-        <app-book-detail [book]="book()"></app-book-detail>
-      }
-    </mat-card-content>
+    <button matButton="filled" class="btn btn-borrow" [disabled]="!book().available" (click)="borrow()">
+      Vypožičať
+    </button>
 
-    <mat-card-actions>
-      <button matButton class="btn btn-detail" (click)="toggleDetails()">
-        @if (showDetails()) { Skryť detail } @else { Zobraziť detail }
-      </button>
-
-      <button matButton="filled" class="btn btn-borrow" [disabled]="!book().available" (click)="borrow()">
-        Vypožičať
-      </button>
-
-      @if (!book().available) {
-        <button matButton="outlined" class="btn btn-return" (click)="giveBack()">Vrátiť</button>
-      }
-    </mat-card-actions>
-  }
+    @if (!book().available) {
+      <button matButton="outlined" class="btn btn-return" (click)="giveBack()">Vrátiť</button>
+    }
+  </mat-card-actions>
 </mat-card>

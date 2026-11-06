@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  max-width: 820px;
+}
+
+.form-box {
+  padding: 24px 28px 28px;
+  background-color: #ffffff;
+  border: 5px solid #000000;
+  box-shadow: 12px 12px 0 #000000;
+}
+
+.back {
+  margin-top: 36px;
+}

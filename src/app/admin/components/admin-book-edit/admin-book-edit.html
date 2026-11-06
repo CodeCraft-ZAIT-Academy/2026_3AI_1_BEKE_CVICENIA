@@ -1,0 +1,19 @@
+@if (!isEditMode()) {
+  <h1 class="page-title">Nová kniha</h1>
+  <div class="form-box">
+    <app-book-form (saved)="save($event)" />
+  </div>
+} @else if (book(); as book) {
+  <h1 class="page-title">Úprava knihy</h1>
+  <div class="form-box">
+    <app-book-form [book]="book" (saved)="save($event)" (cancelled)="cancel()" />
+  </div>
+} @else {
+  <h1 class="page-title">Úprava knihy</h1>
+  <p class="page-message">Kniha s číslom {{ id() }} v knižnici neexistuje.</p>
+}
+
+<a matButton class="page-btn back" routerLink="/admin">
+  <mat-icon>arrow_back</mat-icon>
+  Späť na správu kníh
+</a>

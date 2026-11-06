@@ -81,3 +81,64 @@ html {
 .cdk-overlay-container .mat-mdc-option.mdc-list-item--selected {
   background-color: #fde047;
 }
+
+.page-title {
+  margin: 0 0 24px;
+  padding-bottom: 10px;
+  border-bottom: 7px solid #000000;
+  color: #000000;
+  font-size: 1.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.page-info {
+  display: inline-block;
+  margin: 0 0 24px;
+  padding: 6px 12px;
+  background-color: #000000;
+  color: #fde047;
+  font-family: "Courier New", Consolas, monospace;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.page-btn.mat-mdc-button-base {
+  height: auto;
+  padding: 10px 16px;
+  background-color: #ffffff;
+  border: 4px solid #000000;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #000000;
+  font-weight: 900;
+  text-transform: uppercase;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  --mat-button-text-label-text-color: #000000;
+  --mat-button-filled-label-text-color: #000000;
+  --mat-button-filled-container-color: #ffffff;
+}
+
+.page-btn.mat-mdc-button-base:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0 #000000;
+}
+
+.page-btn.mat-mdc-button-base:active:not(:disabled) {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 #000000;
+}
+
+.page-btn.mat-mdc-button-base:disabled {
+  border-color: #71717a;
+  box-shadow: 6px 6px 0 #a1a1aa;
+  color: #71717a;
+}
+
+.page-message {
+  padding: 26px;
+  background-color: #ffffff;
+  border: 5px dashed #000000;
+  font-weight: 800;
+  text-transform: uppercase;
+}
