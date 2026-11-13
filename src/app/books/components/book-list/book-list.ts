@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ServerBookList } from '../server-book-list/server-book-list';
 import { BookCard } from '../book-card/book-card';
 import { Book } from '../../book';
 import { BookService } from '../../book.service';
@@ -13,6 +14,7 @@ import { BookService } from '../../book.service';
 @Component({
   selector: 'app-book-list',
   imports: [
+    ServerBookList,
     BookCard,
     FormsModule,
     MatButtonModule,
