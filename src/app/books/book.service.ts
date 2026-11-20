@@ -6,6 +6,8 @@ import { BookApiService } from './book-api.service';
 export class BookService {
   private readonly bookApi = inject(BookApiService);
 
+  private readonly favoritesKey = 'favoriteBookIds';
+
   readonly maxBorrowed: number = 10;
 
   readonly loading = signal(true);
@@ -20,7 +22,7 @@ export class BookService {
   constructor() {
     this.bookApi.getBooks().subscribe({
       next: books => {
-        this._books.set(this.limitBorrowed(books));
+        this._books.set(this.limitBorrowed(this.applySavedFavorites(books)));
         this.loading.set(false);
       },
       error: error => {
@@ -76,6 +78,7 @@ export class BookService {
 
   deleteBook(id: number): void {
     this._books.update(books => books.filter(book => book.id !== id));
+    this.saveFavoriteIds();
   }
 
   canBorrowBook(id: number): boolean {
@@ -104,6 +107,31 @@ export class BookService {
     this._books.update(books =>
       books.map(book => (book.id === id ? { ...book, favorite: !book.favorite } : book))
     );
+    this.saveFavoriteIds();
+  }
+
+  private saveFavoriteIds(): void {
+    const ids = this.books().filter(book => book.favorite).map(book => book.id);
+    localStorage.setItem(this.favoritesKey, JSON.stringify(ids));
+  }
+
+  private loadFavoriteIds(): number[] {
+    const saved = localStorage.getItem(this.favoritesKey);
+    if (!saved) {
+      return [];
+    }
+
+    try {
+      const ids = JSON.parse(saved);
+      return Array.isArray(ids) ? ids.filter(id => typeof id === 'number') : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private applySavedFavorites(books: Book[]): Book[] {
+    const ids = this.loadFavoriteIds();
+    return books.map(book => ({ ...book, favorite: ids.includes(book.id) }));
   }
 
   getSortedBooks(sortBy: string): Book[] {
