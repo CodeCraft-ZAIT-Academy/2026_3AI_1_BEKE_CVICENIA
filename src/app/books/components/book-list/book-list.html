@@ -1,5 +1,3 @@
-<app-server-book-list />
-
 <section>
   <h2>Zoznam kníh</h2>
 
@@ -84,7 +82,11 @@
       >
       </app-book-card>
     } @empty {
-      @if (books().length === 0) {
+      @if (loading()) {
+        <p class="empty" role="status">Načítavam knihy…</p>
+      } @else if (loadError()) {
+        <p class="empty error" role="alert">{{ loadError() }}</p>
+      } @else if (books().length === 0) {
         <p class="empty">V knižnici zatiaľ nie sú žiadne knihy.</p>
       } @else {
         <p class="empty">Nenašli sa žiadne knihy. Skús zmeniť hľadanie alebo filter.</p>

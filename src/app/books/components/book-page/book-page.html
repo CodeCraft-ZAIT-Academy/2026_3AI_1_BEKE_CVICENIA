@@ -1,45 +1,51 @@
-@if (book(); as book) {
-  <article class="book" [class.unavailable]="!book.available" [style.border-left-color]="genreColor(book)">
-    <header>
-      <div>
-        <h1>{{ book.title }}</h1>
-        <p class="author">{{ book.author }}</p>
-      </div>
-
-      <button
-        matIconButton
-        class="favorite-btn"
-        (click)="toggleFavorite(book)"
-        [attr.aria-label]="book.favorite ? 'Odobrať z obľúbených' : 'Pridať medzi obľúbené'"
-        [title]="book.favorite ? 'Odobrať z obľúbených' : 'Pridať medzi obľúbené'">
-        @if (book.favorite) {
-          <mat-icon class="favorite-icon">star</mat-icon>
-        } @else {
-          <mat-icon>star_border</mat-icon>
-        }
-      </button>
-    </header>
-
-    @if (book.available) {
-      <p class="status">Kniha je dostupná.</p>
-    } @else {
-      <p class="status status-borrowed">Kniha je momentálne vypožičaná.</p>
-    }
-
-    <app-book-detail [book]="book" />
-
-    <div class="actions">
-      <button matButton="filled" class="page-btn btn-borrow" [disabled]="!book.available" (click)="borrow(book)">
-        Vypožičať
-      </button>
-
-      @if (!book.available) {
-        <button matButton class="page-btn btn-return" (click)="giveBack(book)">Vrátiť</button>
-      }
-    </div>
-  </article>
+@if (loading()) {
+  <p class="page-message" role="status">Načítavam knihu…</p>
+} @else if (loadError()) {
+  <p class="page-message page-error" role="alert">{{ loadError() }}</p>
 } @else {
-  <p class="page-message">Kniha s číslom {{ id() }} v knižnici neexistuje.</p>
+  @if (book(); as book) {
+    <article class="book" [class.unavailable]="!book.available" [style.border-left-color]="genreColor(book)">
+      <header>
+        <div>
+          <h1>{{ book.title }}</h1>
+          <p class="author">{{ book.author }}</p>
+        </div>
+
+        <button
+          matIconButton
+          class="favorite-btn"
+          (click)="toggleFavorite(book)"
+          [attr.aria-label]="book.favorite ? 'Odobrať z obľúbených' : 'Pridať medzi obľúbené'"
+          [title]="book.favorite ? 'Odobrať z obľúbených' : 'Pridať medzi obľúbené'">
+          @if (book.favorite) {
+            <mat-icon class="favorite-icon">star</mat-icon>
+          } @else {
+            <mat-icon>star_border</mat-icon>
+          }
+        </button>
+      </header>
+
+      @if (book.available) {
+        <p class="status">Kniha je dostupná.</p>
+      } @else {
+        <p class="status status-borrowed">Kniha je momentálne vypožičaná.</p>
+      }
+
+      <app-book-detail [book]="book" />
+
+      <div class="actions">
+        <button matButton="filled" class="page-btn btn-borrow" [disabled]="!book.available" (click)="borrow(book)">
+          Vypožičať
+        </button>
+
+        @if (!book.available) {
+          <button matButton class="page-btn btn-return" (click)="giveBack(book)">Vrátiť</button>
+        }
+      </div>
+    </article>
+  } @else {
+    <p class="page-message">Kniha s číslom {{ id() }} v knižnici neexistuje.</p>
+  }
 }
 
 <a matButton class="page-btn back" routerLink="/books">

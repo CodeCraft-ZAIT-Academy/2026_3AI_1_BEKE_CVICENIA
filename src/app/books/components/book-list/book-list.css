@@ -151,3 +151,8 @@ h2 {
   transform: translate(-2px, -2px);
   box-shadow: 7px 7px 0 #000000;
 }
+
+.empty.error {
+  background-color: #fecaca;
+  border-style: solid;
+}

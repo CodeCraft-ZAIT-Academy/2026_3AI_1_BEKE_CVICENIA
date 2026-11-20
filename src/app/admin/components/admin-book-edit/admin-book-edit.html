@@ -1,4 +1,8 @@
-@if (!isEditMode()) {
+@if (loading()) {
+  <p class="page-message" role="status">Načítavam knihy…</p>
+} @else if (loadError()) {
+  <p class="page-message page-error" role="alert">{{ loadError() }}</p>
+} @else if (!isEditMode()) {
   <h1 class="page-title">Nová kniha</h1>
   <div class="form-box">
     <app-book-form (saved)="save($event)" />

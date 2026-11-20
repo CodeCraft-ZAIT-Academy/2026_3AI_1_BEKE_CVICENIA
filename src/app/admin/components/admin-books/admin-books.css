@@ -117,3 +117,7 @@ tr.deleting:hover {
   padding: 26px;
   text-transform: uppercase;
 }
+
+.empty.error {
+  background-color: #fecaca;
+}

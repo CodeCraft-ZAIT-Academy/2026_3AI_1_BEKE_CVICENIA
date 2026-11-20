@@ -16,6 +16,9 @@ import { getGenreColor } from '../../genre-colors';
 export class BookPage {
   private bookService = inject(BookService);
 
+  readonly loading = this.bookService.loading;
+  readonly loadError = this.bookService.loadError;
+
   id = input.required<string>();
 
   readonly book = computed(() => this.bookService.getBookById(Number(this.id())));
