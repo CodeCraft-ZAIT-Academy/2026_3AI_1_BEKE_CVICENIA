@@ -3,7 +3,8 @@
 
   <div class="stats">
     <span>Všetkých kníh: {{ totalBooks() }}</span>
-    <span>Dostupných: {{ availableBooks().length }}</span>
+    <span>Dostupných: {{ (books() | bookFilter: '' : 'available').length }}</span>
+    <span>Obľúbených: {{ (books() | bookFilter: '' : 'all' : true).length }}</span>
   </div>
 
   <div class="toolbar">

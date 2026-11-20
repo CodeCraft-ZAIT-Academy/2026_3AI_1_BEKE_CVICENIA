@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BookCard } from '../book-card/book-card';
+import { BookFilterPipe } from '../../book-filter-pipe';
 import { Book } from '../../book';
 import { BookService } from '../../book.service';
 
@@ -14,6 +15,7 @@ import { BookService } from '../../book.service';
   selector: 'app-book-list',
   imports: [
     BookCard,
+    BookFilterPipe,
     FormsModule,
     MatButtonModule,
     MatIconModule,
@@ -22,14 +24,15 @@ import { BookService } from '../../book.service';
     MatSelectModule,
     MatButtonToggleModule
   ],
+  providers: [BookFilterPipe],
   templateUrl: './book-list.html',
   styleUrl: './book-list.css'
 })
 export class BookList {
   private bookService = inject(BookService);
+  private bookFilter = inject(BookFilterPipe);
 
   readonly books = this.bookService.books;
-  readonly availableBooks = this.bookService.availableBooks;
   readonly loading = this.bookService.loading;
   readonly loadError = this.bookService.loadError;
 
@@ -40,14 +43,14 @@ export class BookList {
   readonly sortBy = signal('none');
   readonly favoritesOnly = signal(false);
 
-  readonly visibleBooks = computed(() => {
-    const list = this.bookService.getFilteredBooks(
+  readonly visibleBooks = computed(() =>
+    this.bookFilter.transform(
+      this.bookService.getSortedBooks(this.sortBy()),
       this.searchText(),
       this.availability(),
-      this.sortBy()
-    );
-    return this.favoritesOnly() ? list.filter(book => book.favorite) : list;
-  });
+      this.favoritesOnly()
+    )
+  );
 
   readonly currentPage = signal(1);
   readonly pageSize = signal(6);

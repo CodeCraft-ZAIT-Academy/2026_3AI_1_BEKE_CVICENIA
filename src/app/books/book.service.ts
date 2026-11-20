@@ -17,10 +17,6 @@ export class BookService {
 
   readonly borrowedBooks = computed(() => this.books().filter(book => !book.available));
 
-  readonly availableBooks = computed(() => this.books().filter(book => book.available));
-
-  readonly favoriteBooks = computed(() => this.books().filter(book => book.favorite));
-
   constructor() {
     this.bookApi.getBooks().subscribe({
       next: books => {
@@ -67,14 +63,6 @@ export class BookService {
     return this.borrowedBooks().length;
   }
 
-  countAvailableBooks(): number {
-    return this.availableBooks().length;
-  }
-
-  countFavoriteBooks(): number {
-    return this.favoriteBooks().length;
-  }
-
   addBook(book: Book): void {
     this._books.update(oldBooks => {
       const maxId = Math.max(0, ...oldBooks.map(b => b.id));
@@ -118,31 +106,18 @@ export class BookService {
     );
   }
 
-  getFilteredBooks(searchText: string, availability: string, sortBy: string): Book[] {
-    const text = searchText.trim().toLowerCase();
-
-    let result = this.books().filter(book =>
-      book.title.toLowerCase().includes(text) || book.author.toLowerCase().includes(text)
-    );
-
-    if (availability === 'available') {
-      result = result.filter(book => book.available);
-    } else if (availability === 'borrowed') {
-      result = result.filter(book => !book.available);
-    }
+  getSortedBooks(sortBy: string): Book[] {
+    const result = [...this.books()];
 
     switch (sortBy) {
       case 'title':
-        result = [...result].sort((a, b) => a.title.localeCompare(b.title));
-        break;
+        return result.sort((a, b) => a.title.localeCompare(b.title));
       case 'year':
-        result = [...result].sort((a, b) => b.year - a.year);
-        break;
+        return result.sort((a, b) => b.year - a.year);
       case 'rating':
-        result = [...result].sort((a, b) => b.rating - a.rating);
-        break;
+        return result.sort((a, b) => b.rating - a.rating);
+      default:
+        return result;
     }
-
-    return result;
   }
 }
